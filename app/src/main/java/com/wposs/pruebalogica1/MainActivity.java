@@ -8,14 +8,14 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    Button btnAdd, btnAdd2;
-    TextView tvResultado, tvResultado2;
-    EditText etTexto, etNum;
-    String s="";
+    Button btnAdd, btnAdd2, btnComprobar;
+    TextView tvResultado, tvResultado2, tvResultado3;
+    EditText etTexto, etNum, etTexto2;
+    String s = "";
+    String s2 = "";
     List<String> arrayList = new ArrayList<String>();
 
     @Override
@@ -23,34 +23,75 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         inicializar();
-        btnAdd.setOnClickListener(view -> agregar());
-      //  btnAdd2.setOnClickListener(view -> agregar2());
+        btnAdd.setOnClickListener(view -> OrdenarFrases());
+        btnAdd2.setOnClickListener(view -> ordenarnumero());
+        btnComprobar.setOnClickListener(view -> comprobar());
     }
-/*
-    private void agregar2() {
-      s = tvResultado2.getText().toString();
-      String s2 = (String) tvResultado2.getText();
-      String[] parts = s2.split(" ");
-     for(int i = 0; i < parts.length; i++) {
-         int j=Integer.parseInt(parts[i]);
-         if (j>Integer.parseInt(s)){
-             parts[i].replace(s);
-         }
-     }
+
+    private void comprobar() {
+        if (etTexto2.getText().toString().isEmpty()) {
+            etNum.setError("Debes ingresar un valor");
+            return;
+        }
+
+        String cadena = etTexto2.getText().toString();
+        cadena = cadena.toLowerCase().replace(" ", "");
+        String invertida = new StringBuilder(cadena).reverse().toString();
+        if (!invertida.equals(cadena)) {
+            tvResultado3.setText("No es Palidronomo");
+            return;
+        }
+        tvResultado3.setText("Si es Palidronomo");
+
     }
-*/
-    private void agregar() {
+
+    private void ordenarnumero() {
+        if (etNum.getText().toString().isEmpty()) {
+            etNum.setError("Debes ingresar un valor");
+            return;
+        }
+
+        s = etNum.getText().toString();
+
+        if (!tvResultado2.getText().toString().isEmpty()) {
+
+            s2 = tvResultado2.getText() + " " + s;
+
+            String[] parts = s2.split(" ");
+
+            for (String part : parts) {
+
+                if (Integer.parseInt(s) > Integer.parseInt(part)) {
+                    String cambio = s;
+                    part = s;
+                    s = cambio;
+                }
+
+            }
+            tvResultado2.setText(s2);
+            return;
+        }
+        tvResultado2.setText(s);
+    }
+
+
+    private void OrdenarFrases() {
+        if (etTexto.getText().toString().isEmpty()) {
+            etNum.setError("Debes ingresar un valor");
+            return;
+        }
         if (etTexto.getText().toString().contains("end-of-file")) {
             btnAdd.setEnabled(false);
         }
         arrayList.add(etTexto.getText().toString());
-        //El iterador se encarga de recorrer el arreglo
-        Iterator<String> iterator = arrayList.iterator();
-        int i = 1;
-        while (iterator.hasNext()) {
-            System.out.println(i + " " + iterator.next());
-            i++;
+        int agregar = 1;
+        String cadenaTexto = "";
+        for (int i = 0; i < arrayList.size(); i++) {
+            cadenaTexto = (cadenaTexto + " " + Integer.toString(agregar) + " " + arrayList.get(i));
+            agregar++;
         }
+        tvResultado.setText(cadenaTexto);
+
     }
 
 
@@ -61,6 +102,9 @@ public class MainActivity extends AppCompatActivity {
         etNum = findViewById(R.id.etNum);
         btnAdd2 = (Button) findViewById(R.id.btn_add2);
         tvResultado2 = (TextView) findViewById(R.id.tv_result2);
+        etTexto2 = findViewById(R.id.et_text2);
+        btnComprobar = (Button) findViewById(R.id.btn_comprobar);
+        tvResultado3 = (TextView) findViewById(R.id.tv_result3);
 
     }
 }
