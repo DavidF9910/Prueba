@@ -30,10 +30,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void comprobar() {
         if (etTexto2.getText().toString().isEmpty()) {
-            etNum.setError("Debes ingresar un valor");
+            etTexto2.setError("Debes ingresar un valor");
             return;
         }
-
         String cadena = etTexto2.getText().toString();
         cadena = cadena.toLowerCase().replace(" ", "");
         String invertida = new StringBuilder(cadena).reverse().toString();
@@ -60,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             String[] parts = s2.split(" ");
 
             for (int i = 0; i < parts.length - 1; i++) {
-                for (int j = 0; j < parts.length -i- 1; j++) {
+                for (int j = 0; j < parts.length - i - 1; j++) {
                     if (Integer.parseInt(parts[j]) < Integer.parseInt(parts[j + 1])) {
                         int tmp = Integer.parseInt(parts[j + 1]);
                         parts[j + 1] = parts[j];
@@ -73,12 +72,12 @@ public class MainActivity extends AppCompatActivity {
                 if (!cadenaTexto.equals("")) {
                     cadenaTexto = cadenaTexto + " " + parts[i];
 
-                }else
-                cadenaTexto = parts[i];
+                } else
+                    cadenaTexto = parts[i];
 
             }
-                tvResultado2.setText(cadenaTexto);
-                return;
+            tvResultado2.setText(cadenaTexto);
+            return;
         }
         tvResultado2.setText(s);
     }
