@@ -59,17 +59,26 @@ public class MainActivity extends AppCompatActivity {
 
             String[] parts = s2.split(" ");
 
-            for (String part : parts) {
-
-                if (Integer.parseInt(s) > Integer.parseInt(part)) {
-                    String cambio = s;
-                    part = s;
-                    s = cambio;
+            for (int i = 0; i < parts.length - 1; i++) {
+                for (int j = 0; j < parts.length -i- 1; j++) {
+                    if (Integer.parseInt(parts[j]) < Integer.parseInt(parts[j + 1])) {
+                        int tmp = Integer.parseInt(parts[j + 1]);
+                        parts[j + 1] = parts[j];
+                        parts[j] = String.valueOf(tmp);
+                    }
                 }
+            }
+            String cadenaTexto = "";
+            for (int i = 0; i < parts.length; i++) {
+                if (!cadenaTexto.equals("")) {
+                    cadenaTexto = cadenaTexto + " " + parts[i];
+
+                }else
+                cadenaTexto = parts[i];
 
             }
-            tvResultado2.setText(s2);
-            return;
+                tvResultado2.setText(cadenaTexto);
+                return;
         }
         tvResultado2.setText(s);
     }
